@@ -1,37 +1,34 @@
-def load_entry(file_path=None):
-    lines = []
+from typing import Tuple
+from typing import List
+
+
+def load_entry(file_path: str) -> List[int]:
     with open(file_path) as file:
-        for line in file.readlines():
-            lines.append(line)
-    return lines
+        return [int(x.strip()) for x in file.readlines()]
 
 
-def check_depth(p, c, i):
-    print('{} ({})'.format(c, c > p))
+def check_depth(previous: int, current: int, increment: int) -> Tuple[int, int]:
+    print('{} ({})'.format(current, current > previous))
 
-    if c > p:
-        i += 1
-    p = c
+    if current > previous:
+        increment += 1
+    previous = current
 
-    return p, i
+    return previous, increment
 
 
 if __name__ == '__main__':
     measurement = 0
     count = 0
     entries = load_entry('input.txt')
-    measurement = int(entries[0]) + int(entries[1]) + int(entries[2])
-
+    measurement = entries[0] + entries[1] + entries[2]
     print('{} ({})'.format(measurement, 'N/A'))
     entries.pop(0)
 
-    for entry in entries:
-        entry_index = entries.index(entry)
+    for entry_index, entry in enumerate(entries):
         if entry_index + 2 < len(entries):
-            window = int(entry) + int(entries[entry_index+1]) + int(entries[entry_index+2])
-            result = check_depth(measurement, window, count)
-            measurement = result[0]
-            count = result[1]
+            window = entry + entries[entry_index + 1] + entries[entry_index + 2]
+            measurement, count = check_depth(measurement, window, count)
         else:
             break
 
