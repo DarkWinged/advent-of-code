@@ -16,7 +16,7 @@ def sum_direction(entries: List[Tuple[str, int]], collection: Dict[str, int] = {
 
 if __name__ == '__main__':
     entries = load_entry('input.txt')
-    direction = {'forward':0,'down':0,'up':0}
+    direction = {'forward': 0, 'down': 0, 'up': 0}
     result = sum_direction(entries, direction)
     print(result)
     print('x:{}, y:{}'.format(result['forward'], result['down']-result['up']))
